@@ -7,7 +7,7 @@ import NavItem from './NavItem';
 import Link from 'next/link';
 
 const navItems = [
-  { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/feec44ee2cc148b4546f68bcf7b5b4d16ed5bee3f2ac22031cb27fbbfa514e36?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Dashboard", link: "/" },
+  { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/feec44ee2cc148b4546f68bcf7b5b4d16ed5bee3f2ac22031cb27fbbfa514e36?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Dashboard", link: "/dashboard" },
   { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/5e459dee4a94b88e9eb0e24f6f5c1414e71c7dae810c369d85c6c91f351170ed?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Account", link: "/" },
   { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/2c746a0fa75c3d4bbcdc93a3e75758220fa2f65c48443ed0c00a632ad37e81b2?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Goals", link: "/" },
   { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/efbdc659f6e81d270707c476f97c749ed5fec8415fd39ea648a07333a9e77bbb?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Investing", link: "/" },
