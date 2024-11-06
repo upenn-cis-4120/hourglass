@@ -19,7 +19,7 @@ const Menu: React.FC<{handleAdvisorClick : any}> = ({handleAdvisorClick}) => {
   return (
     <nav className="flex flex-col items-start px-2.5 w-full h-full text-base text-white position: relative">
       {navItems.map((item, index) => (
-        <Link href={item.link}>
+        <Link href={item.link} key={index}>
         <NavItem key={index} icon={item.icon} label={item.label} />
         </Link>
       ))}
