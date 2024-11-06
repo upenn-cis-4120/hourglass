@@ -33,7 +33,7 @@ const Menu: React.FC<{ handleAdvisorClick: any }> = ({ handleAdvisorClick }) => 
         </div>
       ))}
       <div data-layername="aiFinancialAdvisor"
-        className="self-stretch px-5 pt-3 pb-6 mt-10 font-bold rounded-md 
+        className="self-stretch px-5 pt-3 pb-6 mt-10 rounded-md 
       bg-gradient-to-r from-gradients-orange-start
        to-gradients-orange-end cursor-pointer"
         onClick={handleAdvisorClick}
