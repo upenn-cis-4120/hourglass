@@ -27,7 +27,7 @@ interface ResponseSchema {
 
 
 const generationConfig : any = {
-  temperature: 1,
+  temperature: 0.5,
   topP: 0.95,
   topK: 40,
   maxOutputTokens: 8192,
@@ -172,6 +172,66 @@ const chatSession = model.startChat({
       role: "model",
       parts: [
         {text: "```json\n{\"response\": \"Good to hear! I'd suggest to add this to your earned amount for now, and adjust budgetting next month accordingly. I have updated your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3500, \"remainingBudget\": 2500, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"We can increase the amount you need to save per month by $200. I have made the change. You should see it reflected on your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"We can increase the amount you need to save per month by $200. I have made the change. You should see it reflected on your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"We can increase the amount you need to save per month by $200. I have made the change. You should see it reflected on your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"That's a great goal!  Let's figure out a plan to save for a down payment.  Saving $200 more per month should help you to reach the goal. I have updated your dashboard for you.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"That's a great goal!  Let's figure out a plan to save for a down payment.  Saving $200 more per month should help you to reach the goal. I have updated your dashboard for you.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
       ],
     },
   ],
