@@ -17,7 +17,7 @@ const monthData : MonthCardProps[] = [
 const SavingsGoal: React.FC<{}> = () => {
   return (
     <section className="flex flex-col rounded-md">
-      <h2 className="z-10 self-start mt-0 text-base font-light text-white max-md:max-w-full">
+      <h2 className="z-8 self-start mt-0 text-base font-light text-white max-md:max-w-full">
         You have not met your savings goal in the last 3 months. <br/> 
         Our system forecasts no change in the next 3 months unless you make a conscious change today.
       </h2>
