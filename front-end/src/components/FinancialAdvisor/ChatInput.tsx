@@ -4,13 +4,183 @@
 "use client";
 import React, { useState } from "react";
 import { Message } from "./FinancialAdvisor";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, GenerationConfig } from "@google/generative-ai";
+import useBudgetStore from "../SpendingDashboard/BudgetStore";
 
 interface ChatInputProps {
   onSendMessage: (message: Message) => void;
 }
 
+// Define types for budget data
+interface BudgetData {
+  currentCashFlow: number;
+  remainingBudget: number;
+  spent: number;
+  earned: number;
+}
+
+// Define the structure of the response schema
+interface ResponseSchema {
+  response: string;
+  updated: BudgetData;
+}
+
+
+const generationConfig : any = {
+  temperature: 1,
+  topP: 0.95,
+  topK: 40,
+  maxOutputTokens: 8192,
+  responseMimeType: "application/json",
+  responseSchema: {
+    type: "object",
+    properties: {
+      response: {
+        type: "string"
+      },
+      updated: {
+        type: "object",
+        properties: {
+          currentCashFlow: {
+            type: "number"
+          },
+          remainingBudget: {
+            type: "number"
+          },
+          spent: {
+            type: "number"
+          },
+          earned: {
+            type: "number"
+          }
+        }
+      }
+    }
+  },
+};
+
+if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) throw Error("No valid API key.");
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const chatSession = model.startChat({
+  generationConfig,
+  history: [
+    {
+      role: "user",
+      parts: [
+        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\n    currentCashFlow: 5000,\n    remainingBudget: 2000,\n    spent: 1500,\n    earned: 3000,\n  }"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "Could you help me update my budget setting to have extra $500 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "Sure, let's increase the amount you need to save every month by $500 to reach your goal. I have made the changes in you dashboard.\n```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1500, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\n```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\n```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\",\n\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "Could you help me update my budget setting to have extra $500 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"Sure, let's increase the amount you need to save every month by $500 to reach your goal. I have made the changes in you dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1500, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "I have earned $500 extra this month, should I add this to my saving goal?"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"Good to hear! I'd suggest to add this to your earned amount for now, and adjust budgetting next month accordingly. I have updated your dashboard.\",\n\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3500, \"remainingBudget\": 2500, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+    {
+      role: "user",
+      parts: [
+        {text: "I have earned $500 extra this month, should I add this to my saving goal?"},
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {text: "```json\n{\"response\": \"Good to hear! I'd suggest to add this to your earned amount for now, and adjust budgetting next month accordingly. I have updated your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3500, \"remainingBudget\": 2500, \"spent\": 1500}}\n\n```"},
+      ],
+    },
+  ],
+});
+
 const ChatInput: React.FC<ChatInputProps> = ({onSendMessage}) => {
+  const budgetData = useBudgetStore((state) => state.budgetData);
+  const updateBudgetData = useBudgetStore((state) => state.updateBudgetData);
+
   const [inputText, setInputText] = useState("");
 
   // Function to handle input changes
@@ -33,22 +203,27 @@ const ChatInput: React.FC<ChatInputProps> = ({onSendMessage}) => {
     }
 
     try {
-      if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) throw Error("No valid API key.");
-      const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const prompt = userPrompt.text + ". Here are my current budget: "+ JSON.stringify(budgetData);
 
-      const prompt = userPrompt.text;
-
-      const result = await model.generateContent(prompt);
-      console.log("API response:", result.response.text());
+      // const result = await model.generateContent(prompt);
+      const result = await chatSession.sendMessage(prompt);
 
       const responseText = result.response.text();
+      // const responseData = result.updated;
+      console.log(responseText);
+      // console.log(responseData)
+      const responseJSON : ResponseSchema = JSON.parse(result.response.text()) as ResponseSchema;
 
-      if (responseText.trim()) {
+      if (responseJSON?.response?.trim()) {
         onSendMessage({
-          text: responseText,
+          text: responseJSON.response.trim(),
           isUser: false,
         });
+      }
+
+      if(responseJSON?.updated){
+        console.log("updating data: "+JSON.stringify(responseJSON.updated));
+        updateBudgetData(responseJSON.updated);
       }
 
     } catch (error) {

@@ -5,6 +5,7 @@ import React from 'react';
 import BudgetSummary from './BudgetSummary';
 import SpendingBreakdown from './SpendingBreakdown';
 import { SpendingCategory } from './types';
+import useBudgetStore from './BudgetStore';
 
 const spendingCategories: SpendingCategory[] = [
   { icon: '🛍️', name: 'Shopping', color: 'border-fuchsia-500', spent: 100, budget: 200 },
@@ -14,14 +15,13 @@ const spendingCategories: SpendingCategory[] = [
 ];
 
 const BudgetingDashboard: React.FC = () => {
+  const budgetData = useBudgetStore((state) => state.budgetData);
+  console.log("budget: "+budgetData);
   return (
     <section className="flex flex-col rounded-none max-w-[573px]">
       <div className="flex flex-col px-7 py-8 w-full rounded-2xl border border-solid shadow-lg bg-zinc-800 border-white border-opacity-30 max-md:px-5 max-md:max-w-full">
         <BudgetSummary
-          currentCashFlow={4000}
-          remainingBudget={3300}
-          spent={2500}
-          earned={6500}
+          {...budgetData}
         />
         <hr className="shrink-0 mt-5 max-w-full h-px border border-solid border-white border-opacity-10 w-[515px] max-md:mr-1" />
         <SpendingBreakdown categories={spendingCategories} />
