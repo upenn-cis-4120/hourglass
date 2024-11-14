@@ -29,6 +29,7 @@ export const Dashboard: React.FC<DashboardProps> = () => {
   return (
     
     <main data-layername="desktop11" className="flex flex-col px-16 py-16 bg-[#212529] max-md:px-5">
+      <div style={{ transform: "scale(0.9)", transformOrigin: "top" }}>
       <header className="z-8 self-start mt-0 text-3xl font-bold text-white">
         Dashboard
       </header>
@@ -36,6 +37,7 @@ export const Dashboard: React.FC<DashboardProps> = () => {
       <DashboardRow cards={middleRowCards} />
       <DashboardRow cards={bottomRowCards.slice(0, 3)} />
       <DashboardRow cards={bottomRowCards.slice(3)} />
+      </div>
     </main>
   );
 };

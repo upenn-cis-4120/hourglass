@@ -20,19 +20,19 @@ const videoLessons: VideoLessonData[] = [
     imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/9615b2ad71509576e4670adde0709404b770ec46ea101e5750fb1969904191b6?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e",
     title: "Finance 101",
     description: "A beginner's guide to mastering your money!",
-    videoLink: "www.youtube.com/embed/EsOTfVIcdEI&ab_channel=selfLearn-en" // YouTube embed link
+    videoLink: "https://www.youtube.com/embed/iR7b2NjgAO8?si=tJDkds24dVFD5Nw-"
   },
   {
     imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/9d6e126220cbd32ca4f3e3b1be588a8f59938516b58f0a166622d78a02f25484?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e",
     title: "Investing 101",
     description: "Unlock the basics of growing your wealth!",
-    videoLink: "www.youtube.com/embed/l4TzfPfLMB4&ab_channel=SmartInvestingTrends"
+    videoLink: "https://www.youtube.com/embed/lNdOtlpmH5U?si=ZNXouy09nQKpwTO8"
   },
   {
     imageSrc: "https://cdn.builder.io/api/v1/image/assets/TEMP/24c74875cbba215b261c6f2fec20e11bad4216a0b9431c4bf998c39daa3d31e2?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e",
     title: "Savings 101",
     description: "Master the art of building financial security!",
-    videoLink: "www.youtube.com/embed/ku52Pb7fFT8&ab_channel=MoneyCoach"
+    videoLink: "https://www.youtube.com/embed/ku52Pb7fFT8?si=wl_wHVj15IQV3Dgt"
   },
   // Add more lessons as needed
 ];

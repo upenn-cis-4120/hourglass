@@ -22,11 +22,11 @@ const ChartBar: React.FC<ChartBarProps> = ({ paid, total }) => {
 
       {/* Green bar - placed in front */}
       <div
-        className="relative bg-lime-300 rounded-[30px_30px_0px_0px] w-[39px] z-10"
+        className="relative bg-lime-300 rounded-[30px_30px_0px_0px] w-[39px] z-8"
         style={{ height: `${(paid / total) * 100}%` }}
       >
         <div className="absolute bottom-1/2 translate-y-1/2 text-black transform -rotate-90
-        text-sm font-bold w-full text-center z-20 font-light">
+        text-sm font-bold w-full text-center z-9 font-light">
           ${paid}k
         </div>
       </div>

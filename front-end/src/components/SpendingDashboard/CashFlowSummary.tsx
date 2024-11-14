@@ -26,7 +26,11 @@ const CashFlowSummary: React.FC = () => {
           </div>
           <div className="flex justify-start items-center self-stretch mt-3 w-full">
             <div className="flex-1 h-5 rounded-full bg-white bg-opacity-20">
-              <div className="w-2/5 h-full bg-lime-300 rounded-full" />
+              <div className=" h-full bg-lime-300 rounded-full" 
+                        style={{
+                          width: `${Math.min((budgetData.spent / budgetData.earned) * 100, 100)}%`
+                        }}
+                        />
             </div>
           </div>
           <div className="self-end mt-1.5 text-base font-bold text-right text-white text-opacity-70">

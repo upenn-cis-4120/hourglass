@@ -31,8 +31,11 @@ const SideBar: React.FC = () => {
           alt=""
           className="object-cover absolute inset-0 size-full"
         />
+        <div style={{ transform: "scale(0.9)", transformOrigin: "top left" }}>
         <AssetSection />
         <DebtSection />
+        </div>
+        
         </main>
       <Menu handleAdvisorClick={handleAdvisorClick} />
       <FinancialAdvisor visible={isChatBoxVisible} handleCloseAdvisor={handleAdvisorClick} />

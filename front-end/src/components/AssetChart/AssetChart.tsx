@@ -11,7 +11,7 @@ interface AssetChartProps {
   chartImageSrc: string;
 }
 
-const AssetChart: React.FC<AssetChartProps> = ({ assetName, chartImageSrc }) => {
+const AssetChart: React.FC<{}> = ({}) => {
   return (
     <section className="flex flex-col max-w-[273px] mt-5">
       {/* <AssetLabel assetName={assetName} /> */}

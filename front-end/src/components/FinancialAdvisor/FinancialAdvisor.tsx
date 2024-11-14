@@ -29,7 +29,7 @@ const FinancialAdvisor: React.FC<{ visible: boolean, handleCloseAdvisor: any }> 
         }`}
     >
       <main className="flex flex-col mx-auto w-full h-full rounded-none max-w-[480px] ">
-        <section className="flex flex-col w-full h-full rounded-none shadow-sm">
+        <section className="flex flex-col w-full h-full rounded-none shadow-sm overflow-y-auto">
           <header className="flex flex-col w-full text-white rounded-none pt-5
         bg-gradient-to-r from-gradients-green-start to-gradients-green-end">
             <img
