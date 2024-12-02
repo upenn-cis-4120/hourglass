@@ -19,6 +19,10 @@ const useBudgetStore = create<BudgetStore>((set) => ({
     remainingBudget: 2000,
     spent: 1500,
     earned: 3000,
+    shopping: {left: 100, budget: 20}, 
+    travel: {left: 200, budget: 1000}, 
+    eatingout: {left: 50, budget: 200}, 
+    groceries: {left: 100, budget: 200}
   },
   updateBudgetData: (newData) =>
     set((state) => ({

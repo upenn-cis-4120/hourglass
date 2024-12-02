@@ -13,7 +13,7 @@ interface MessageProps {
 const ChatMessage: React.FC<MessageProps> = ({ message }) => {
   if (message.isUser) {
     return (
-      <div className="self-end px-5 pt-3 pb-5 mt-5 max-w-full leading-5 bg-lime-300 rounded-3xl w-[250px]">
+      <div className="self-end px-5 pt-3 pb-5 mt-5 max-w-full leading-5 bg-lime-300 rounded-3xl rounded-tr-none w-[250px]">
         {message.text}
       </div>
     );
@@ -30,7 +30,7 @@ const ChatMessage: React.FC<MessageProps> = ({ message }) => {
         />
         <div>Hourglass Advisor</div>
       </div>
-      <div className="px-5 pt-3 pb-6 mt-1 max-w-full leading-5 rounded-3xl bg-white bg-opacity-80 w-[250px]">
+      <div className="px-5 pt-3 pb-6 mt-1 max-w-full leading-5 rounded-3xl rounded-tl-none bg-white bg-opacity-80 w-[250px]">
         {message.text}
       </div>
     </>

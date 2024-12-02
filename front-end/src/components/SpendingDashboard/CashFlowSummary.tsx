@@ -7,7 +7,7 @@ import useBudgetStore from './BudgetStore';
 
 const CashFlowSummary: React.FC = () => {
   const budgetData = useBudgetStore((state) => state.budgetData);
-  console.log(JSON.stringify(budgetData));
+  // console.log(JSON.stringify(budgetData));
   return (
     <div className="flex justify-between items-start max-md:flex-col font-light mt-3
     max-md:items-stretch max-md:gap-0">

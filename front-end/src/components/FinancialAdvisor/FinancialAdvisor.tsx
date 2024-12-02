@@ -15,6 +15,7 @@ export interface Message {
 
 const FinancialAdvisor: React.FC<{ visible: boolean, handleCloseAdvisor: any }> = ({ visible, handleCloseAdvisor }) => {
   const [messages, setMessages] = useState<Message[]>([]); // Message list state
+  const [dashboardChange, setDashboardChange] = useState(false); // Message list state
 
   // Function to add a new message
   const addMessage = (newMessage: Message) => {
@@ -22,12 +23,12 @@ const FinancialAdvisor: React.FC<{ visible: boolean, handleCloseAdvisor: any }> 
   };
 
   return (
-    <div
-      className={`absolute top-0 left-full h-screen w-80 bg-zinc-800 shadow-lg 
-        transform duration-300 ease-in-out
-        ${visible ? 'translate-x-0 opacity-100 z-10' : '-translate-x-full opacity-0 pointer-events-none z-10'
-        }`}
-    >
+<div
+  className={`absolute top-0 right-0 h-screen w-[28%] bg-zinc-800 shadow-lg 
+    transform duration-300 ease-in-out
+    ${visible ? '-translate-x-0 opacity-100 z-10' : 'translate-x-full opacity-0 pointer-events-none z-10'
+    }`}
+>
       <main className="flex flex-col mx-auto w-full h-full rounded-none max-w-[480px] ">
         <section className="flex flex-col w-full h-full rounded-none shadow-sm overflow-y-auto">
           <header className="flex flex-col w-full text-white rounded-none pt-5
@@ -47,11 +48,13 @@ const FinancialAdvisor: React.FC<{ visible: boolean, handleCloseAdvisor: any }> 
               </p>
             </div>
           </header>
+          
           <div className="flex flex-col items-start space-between px-8 mt-8 w-full text-sm text-black">
+          <p className="text-white italic -mt-2">For example, you can ask, “what does investing mean?” or “how can I increase my monthly savings by $200?”</p>
             {messages.map((message, index) => (
               <ChatMessage key={index} message={message} />
             ))}
-            {(messages.some((message) => message.isUser === false)) && (
+            {(messages.some((message) => message.isUser === false) && dashboardChange) && (
               <Link href="/dashboard">
                 <button className="btn" onClick={handleCloseAdvisor}>
                   Go to Dashboard
@@ -60,7 +63,7 @@ const FinancialAdvisor: React.FC<{ visible: boolean, handleCloseAdvisor: any }> 
             )}
           </div>
         </section>
-        <ChatInput onSendMessage={addMessage} />
+        <ChatInput onSendMessage={addMessage} onDashboardChange={setDashboardChange}/>
       </main>
     </div>
   );

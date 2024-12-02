@@ -10,6 +10,7 @@ import useBudgetStore from "../SpendingDashboard/BudgetStore";
 
 interface ChatInputProps {
   onSendMessage: (message: Message) => void;
+  onDashboardChange: any
 }
 
 // Define types for budget data
@@ -27,42 +28,54 @@ interface ResponseSchema {
 }
 
 
+// const generationConfig : any = {
+//   temperature: 0.5,
+//   topP: 0.95,
+//   topK: 40,
+//   maxOutputTokens: 2048,
+//   responseMimeType: "application/json",
+//   responseSchema: {
+//     type: "object",
+//     properties: {
+//       response: {
+//         type: "string"
+//       },
+//       updated: {
+//         type: "object",
+//         properties: {
+//           currentCashFlow: {
+//             type: "integer"
+//           },
+//           remainingBudget: {
+//             type: "integer"
+//           },
+//           spent: {
+//             type: "integer"
+//           },
+//           earned: {
+//             type: "integer"
+//           }
+//         }
+//       }
+//     },
+//     required: [
+//       "response"
+//     ]
+//   },
+// };
+
 const generationConfig : any = {
-  temperature: 0.5,
+  temperature: 0.75,
   topP: 0.95,
-  topK: 40,
+  topK: 64,
   maxOutputTokens: 8192,
   responseMimeType: "application/json",
-  responseSchema: {
-    type: "object",
-    properties: {
-      response: {
-        type: "string"
-      },
-      updated: {
-        type: "object",
-        properties: {
-          currentCashFlow: {
-            type: "number"
-          },
-          remainingBudget: {
-            type: "number"
-          },
-          spent: {
-            type: "number"
-          },
-          earned: {
-            type: "number"
-          }
-        }
-      }
-    }
-  },
 };
-const genAI = new GoogleGenerativeAI("AIzaSyDP-DHuTrwak5t7JhLKtt1pnJUItOjdSLo");
 
-//if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) throw Error("No valid API key.");
-//const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
+// const genAI = new GoogleGenerativeAI("AIzaSyDP-DHuTrwak5t7JhLKtt1pnJUItOjdSLo");
+
+if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) throw Error("No valid API key.");
+const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const chatSession = model.startChat({
@@ -71,175 +84,115 @@ const chatSession = model.startChat({
     {
       role: "user",
       parts: [
-        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\n    currentCashFlow: 5000,\n    remainingBudget: 2000,\n    spent: 1500,\n    earned: 3000,\n  }"},
+        {text: "The user will ask about personal fianance advise, followed by a json object of their current budget plan and spending categories in this format for example: {\\ncurrentCashFlow: 5000,\\nremainingBudget: 2000,\\nspent: 1500,\\nearned: 3000,\\nshopping: {left: 100, budget: 200}, travel: {left: 50, budget: 100}, eatingout: {left: 100, budget: 200}, groceries: {left: 100, budget: 200}}\n\nYou should respond with advice by answering their question or suggest and explain changes to their budget plan. Your response should be a updated json object based on the user’s current budget plan, in a format like this, where the response field is required and the number fields must be numbers:\n{\n  \"response\": \"advice and explanation ...\",\n  \"updated\": {\n    \"currentCashFlow\": 5000,\n    \"remainingBudget\": 1750,\n    \"spent\": 1750,\n    \"earned\": 3000,\n    \"shopping\": {\n      \"left\": 50,\n      \"budget\": 100\n    },\n    \"travel\": {\n      \"left\": 25,\n      \"budget\": 50\n    },\n\"eatingout\": {\n      \"left\": 25,\n      \"budget\": 50\n    },\n\"groceries\": {\n      \"left\": 25,\n      \"budget\": 50\n    }\n  }\n}\n\n\nHere is my question:\nHow can I start saving for a down payment for a car of total $10000? Could you suggest an amount I might want to save extra each month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n“shopping”: {“left”: 100, “budget”: 200}, \n“travel”: {“left”: 50, “budget: 100}, \n“eatingout”: {“left”: 100, “budget”: 200}, \n“groceries: {“left”: 100, “budge”t: 200}\n}"},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"To save for a $10,000 down payment, we need a savings plan.  Given your current cash flow of $5000 and a remaining budget of $2000, you have room to adjust your spending and allocate more towards savings. I've reduced your discretionary spending categories (shopping, travel, eating out) by 50% to free up funds for your car down payment.  This will allow you to save $250 per month which could help you meet your goal faster.  Aim to consistently save this amount each month.  You can reassess and adjust the savings amount based on your progress and any unexpected expenses. Remember to track your spending closely to ensure you stay on track with your new budget.  It may also be helpful to explore options for increasing your monthly earned income.\",\n  \"updated\": {\n    \"currentCashFlow\": 5000,\n    \"remainingBudget\": 1750,\n    \"spent\": 1750,\n    \"earned\": 3000,\n    \"shopping\": {\n      \"left\": 50,\n      \"budget\": 100\n    },\n    \"travel\": {\n      \"left\": 25,\n      \"budget\": 50\n    },\n    \"eatingout\": {\n      \"left\": 50,\n      \"budget\": 100\n    },\n    \"groceries\": {\n      \"left\": 50,\n      \"budget\": 100\n    }\n  }\n}\n```\n"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "Could you help me update my budget setting to have extra $500 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+        {text: "Could you help to increase my shopping budget a bit? This week is black friday and I want to buy some discount clothes. here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 200,\n}\n}"},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "Sure, let's increase the amount you need to save every month by $500 to reach your goal. I have made the changes in you dashboard.\n```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1500, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"Okay, understanding you want to take advantage of Black Friday sales.  I've increased your shopping budget by $100, reducing your travel budget to compensate.  This ensures you stay within your overall budget while allowing for some extra spending on clothes.  Remember to track your spending closely to avoid overspending during the sales.  After Black Friday, you can re-evaluate your budget and readjust the amounts if needed.\",\n  \"updated\": {\n    \"currentCashFlow\": 5000,\n    \"remainingBudget\": 1900,\n    \"spent\": 1600,\n    \"earned\": 3000,\n    \"shopping\": {\n      \"left\": 200,\n      \"budget\": 300\n    },\n    \"travel\": {\n      \"left\": 200,\n      \"budget\": 200\n    },\n    \"eatingout\": {\n      \"left\": 150,\n      \"budget\": 200\n    },\n    \"groceries\": {\n      \"left\": 150,\n      \"budget\": 200\n    }\n  }\n}\n```\n"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+        {text: "\"I want to save 100$ extra this month. Could you suggest a change to my budget plan? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n}\""},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\n```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"To save an extra $100 this month, we need to reduce spending in other areas. I've made some adjustments to your budget.  I've reduced your \\\"eating out\\\" budget by $50 and your \\\"travel\\\" budget by $50. This frees up $100 that can be added to your savings.  Remember that you can always adjust these categories later based on your needs and priorities. Consistent saving is key to achieving your financial goals.\",\n  \"updated\": {\n    \"currentCashFlow\": 5000,\n    \"remainingBudget\": 1100,\n    \"spent\": 900,\n    \"earned\": 3000,\n    \"shopping\": {\n      \"left\": 100,\n      \"budget\": 200\n    },\n    \"travel\": {\n      \"left\": 250,\n      \"budget\": 250\n    },\n    \"eatingout\": {\n      \"left\": 100,\n      \"budget\": 150\n    },\n    \"groceries\": {\n      \"left\": 150,\n      \"budget\": 300\n    }\n  }\n}\n```\n"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+        {text: "\"I want to save 80$ extra this month. Could you suggest a change to my budget plan? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n}\""},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\n```json\n{\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"To save an extra $80 this month, we can make some minor adjustments to your budget. I've reduced your 'eating out' budget by $40, leaving $110, and reduced your 'travel' budget by $40, leaving $260. This will free up $80 to add to your savings. Remember that you can adjust these categories later if needed, but consistent saving is key to achieving your financial goals.\",\n  \"updated\": {\n    \"currentCashFlow\": 5000,\n    \"remainingBudget\": 1080,\n    \"spent\": 920,\n    \"earned\": 3000,\n    \"shopping\": {\n      \"left\": 100,\n      \"budget\": 200\n    },\n    \"travel\": {\n      \"left\": 260,\n      \"budget\": 260\n    },\n    \"eatingout\": {\n      \"left\": 110,\n      \"budget\": 160\n    },\n    \"groceries\": {\n      \"left\": 150,\n      \"budget\": 300\n    }\n  }\n}\n```\n"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+        {text: "what does investing mean? budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n}\"\nFor questions like this that is not related to making changes to budget plan, respond with language friendly to someone who is new to personal fiance, in this json format:\n{\"response\": \"Investing means...\"}"},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "```json\n{\"response\": \"Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\",\n\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
+        {text: "```json\n{\n  \"response\": \"Investing means using your money to buy assets that you believe will increase in value over time.  Think of it like planting a seed – you put in some money now (your investment) with the hope of getting more back later (your returns).  There are many ways to invest, such as buying stocks (shares of ownership in a company), bonds (loans to a company or government), or real estate (property).  Each type of investment carries different levels of risk and potential reward.  Investing is generally a long-term strategy, and it's important to understand the risks involved before you start. It's often recommended to start with a small amount and gradually increase your investments as you learn more and become more comfortable.  Consider talking to a financial advisor to get personalized guidance based on your goals and risk tolerance.\"\n}\n```\n"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "Could you help me update my budget setting to have extra $200 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+        {text: "how about a finance joke for today budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n}\""},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "```json\n{\"response\": \"Sure, let's increase the amount you need to save every month by $200 to reach your goal. I have made the changes in you dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"Why did the scarecrow win an award? Because he was outstanding in his field!\"\n}\n```\n"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "Could you help me update my budget setting to have extra $500 every month? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
+        {text: "Hello budgetData: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n} \nFor greetings like this, respond with greeting and 1-2 finance-related prompts the user can try in this format: {\"response\": \"Hello! how can I help you today? you can ask me...\"}"},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "```json\n{\"response\": \"Sure, let's increase the amount you need to save every month by $500 to reach your goal. I have made the changes in you dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1500, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"Hello! How can I help you today? You can ask me things like:  \\\"How can I increase my savings by $200 this month?\\\", or \\\"What are some good strategies for budgeting for a vacation?\\\"\"\n}\n```\n"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "I have earned $500 extra this month, should I add this to my saving goal?"},
+        {text: "Hey, nothing special today budgetData: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n} \nFor general prompt i.e. not really related to finance like this, respond with general response and 1-2 finance-related prompts the user can try in this format: {\"response\": \"Hello! how can I help you today? you can ask me...\"}"},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "```json\n{\"response\": \"Good to hear! I'd suggest to add this to your earned amount for now, and adjust budgetting next month accordingly. I have updated your dashboard.\",\n\"updated\": {\"currentCashFlow\": 5000, \"earned\": 3500, \"remainingBudget\": 2500, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"Hey there!  Is there anything I can help you with today?  Perhaps you'd like to explore some financial planning options, or maybe you have questions about budgeting or saving strategies?\"\n}\n```"},
       ],
     },
     {
       role: "user",
       parts: [
-        {text: "I have earned $500 extra this month, should I add this to my saving goal?"},
+        {text: "hello budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n} \nFor greetings like this, respond with greeting and 1-2 finance-related prompts the user can try in this format: {\"response\": \"Hello! how can I help you today? you can ask me...\"}\nPlease don't list budget details or suggest budget adjustments if the user is just greeting or says something not finance related, even if they added their current budget plan at the end of their prompt."},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "```json\n{\"response\": \"Good to hear! I'd suggest to add this to your earned amount for now, and adjust budgetting next month accordingly. I have updated your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3500, \"remainingBudget\": 2500, \"spent\": 1500}}\n\n```"},
-      ],
-    },
-    {
-      role: "user",
-      parts: [
-        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
-      ],
-    },
-    {
-      role: "model",
-      parts: [
-        {text: "```json\n{\"response\": \"We can increase the amount you need to save per month by $200. I have made the change. You should see it reflected on your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
-      ],
-    },
-    {
-      role: "user",
-      parts: [
-        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
-      ],
-    },
-    {
-      role: "model",
-      parts: [
-        {text: "```json\n{\"response\": \"We can increase the amount you need to save per month by $200. I have made the change. You should see it reflected on your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
-      ],
-    },
-    {
-      role: "user",
-      parts: [
-        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
-      ],
-    },
-    {
-      role: "model",
-      parts: [
-        {text: "```json\n{\"response\": \"We can increase the amount you need to save per month by $200. I have made the change. You should see it reflected on your dashboard.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n```"},
-      ],
-    },
-    {
-      role: "user",
-      parts: [
-        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
-      ],
-    },
-    {
-      role: "model",
-      parts: [
-        {text: "```json\n{\"response\": \"That's a great goal!  Let's figure out a plan to save for a down payment.  Saving $200 more per month should help you to reach the goal. I have updated your dashboard for you.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
-      ],
-    },
-    {
-      role: "user",
-      parts: [
-        {text: "How can I start saving for a down payment for a house? here is my current budget info: budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 2000,\nspent: 1500,\nearned: 3000,\n}"},
-      ],
-    },
-    {
-      role: "model",
-      parts: [
-        {text: "```json\n{\"response\": \"That's a great goal!  Let's figure out a plan to save for a down payment.  Saving $200 more per month should help you to reach the goal. I have updated your dashboard for you.\", \"updated\": {\"currentCashFlow\": 5000, \"earned\": 3000, \"remainingBudget\": 1800, \"spent\": 1500}}\n\n```"},
+        {text: "```json\n{\n  \"response\": \"Hello! How can I help you manage your finances today? You could ask me about setting savings goals or creating a realistic monthly budget.\"\n}\n```\n"},
       ],
     },
   ],
 });
 
-const ChatInput: React.FC<ChatInputProps> = ({onSendMessage}) => {
+const ChatInput: React.FC<ChatInputProps> = ({onSendMessage, onDashboardChange}) => {
   const budgetData = useBudgetStore((state) => state.budgetData);
   const updateBudgetData = useBudgetStore((state) => state.updateBudgetData);
 
@@ -265,14 +218,15 @@ const ChatInput: React.FC<ChatInputProps> = ({onSendMessage}) => {
     }
 
     try {
-      const prompt = userPrompt.text + ". Here are my current budget: "+ JSON.stringify(budgetData);
+      const prompt = userPrompt.text + " " + JSON.stringify(budgetData);
+      console.log("user: "+prompt);
 
       // const result = await model.generateContent(prompt);
       const result = await chatSession.sendMessage(prompt);
-
+      // console.log("recevied result");
       const responseText = result.response.text();
       // const responseData = result.updated;
-      console.log(responseText);
+      // console.log(responseText);
       // console.log(responseData)
       const responseJSON : ResponseSchema = JSON.parse(result.response.text()) as ResponseSchema;
 
@@ -286,6 +240,7 @@ const ChatInput: React.FC<ChatInputProps> = ({onSendMessage}) => {
       if(responseJSON?.updated){
         console.log("updating data: "+JSON.stringify(responseJSON.updated));
         updateBudgetData(responseJSON.updated);
+        onDashboardChange(true);
       }
 
     } catch (error) {
