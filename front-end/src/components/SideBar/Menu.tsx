@@ -5,6 +5,8 @@
 import React, { useState } from 'react';
 import NavItem from './NavItem';
 import Link from 'next/link';
+import AssetSection from './AssetSection';
+import DebtSection from './DebtSection';
 
 const navItems = [
   { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/feec44ee2cc148b4546f68bcf7b5b4d16ed5bee3f2ac22031cb27fbbfa514e36?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Dashboard", link: "/dashboard" },
@@ -32,14 +34,11 @@ const Menu: React.FC<{ handleAdvisorClick: any }> = ({ handleAdvisorClick }) => 
           </Link>
         </div>
       ))}
-      <div data-layername="aiFinancialAdvisor"
-        className="self-stretch px-5 pt-3 pb-6 mt-10 rounded-md 
-      bg-gradient-to-r from-gradients-orange-start
-       to-gradients-orange-end cursor-pointer"
-        onClick={handleAdvisorClick}
-      >
-        AI Financial Advisor
-      </div>
+      <div className="shrink-0 self-stretch mt-2.5 h-px border border-solid border-white border-opacity-10" />
+      <div className='h-full' style={{ transform: "scale(0.9)", transformOrigin: "top left" }}>
+        <AssetSection />
+        <DebtSection />
+        </div>
       <div className="shrink-0 self-stretch mt-2.5 h-px border border-solid border-white border-opacity-10" />
       <div className="flex gap-5 justify-between self-stretch mx-2.5 mt-2.5 text-sm">
         <div data-layername="settings">Settings</div>
