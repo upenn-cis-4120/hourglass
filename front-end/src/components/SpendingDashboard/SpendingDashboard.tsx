@@ -9,7 +9,7 @@ const SpendingDashboard: React.FC = () => {
   return (
     <div className="flex flex-col rounded-none max-w-[519px]">
       <CashFlowSummary />
-      <div className="shrink-0 mt-5 w-full h-px border border-solid border-white border-opacity-10 max-md:mr-1" />
+      <div className="shrink-0 mt-2 w-full h-px border border-solid border-white border-opacity-10 max-md:mr-1" />
       <SpendingBreakdown />
     </div>
   );

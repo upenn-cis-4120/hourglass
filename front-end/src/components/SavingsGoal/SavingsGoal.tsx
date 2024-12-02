@@ -21,7 +21,7 @@ const SavingsGoal: React.FC<{}> = () => {
         You have not met your savings goal in the last 3 months. <br/> 
         Our system forecasts no change in the next 3 months unless you make a conscious change today.
       </h2>
-      <div className="flex flex-wrap gap-5 mt-7 text-sm leading-4 text-center text-white text-opacity-80">
+      <div className="flex flex-wrap gap-5 mt-2 mb-3 text-sm leading-4 text-center text-white text-opacity-80">
         {monthData.map((month, index) => (
           <MonthCard
             key={index}

@@ -33,8 +33,8 @@ const dashboardComponents: { [key: string]: React.FC<{}> } = {
 export const DashboardCard: React.FC<DashboardCardProps> = ({ title, width }) => {
   const CardComponent = dashboardComponents[title];
   return (
-    <section className={`flex flex-col ${width} max-md:ml-0 max-md:w-full`}>
-      <div className="flex flex-col grow px-8 pt-7 pb-10 w-full text-xl font-bold text-white whitespace-nowrap rounded-2xl border border-solid card-shadow bg-[#2A2E32] border-white border-opacity-30 max-md:px-5 max-md:pb-24 max-md:mt-10">
+    <section className={`flex flex-col w-full h-full max-md:ml-0 max-md:w-full`} >
+      <div className="flex flex-col grow px-5 pt-5 pb-2 w-full text-lg font-sans font-medium text-white whitespace-nowrap rounded-2xl border border-solid bg-[#2A2E32] border-white border-opacity-30 max-md:px-5 max-md:pb-24 max-md:mt-10">
         <div className='flex flex-row justify-between'>
           {title === "What You Have Learned So Far" ? (
             <>
@@ -45,7 +45,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({ title, width }) =>
           )}
           <img src="arrow_orange.svg" />
         </div>
-        <div className='font-light'>
+        <div className='font-sans font-extralight'>
         {CardComponent && <CardComponent />}
         </div>
       </div>

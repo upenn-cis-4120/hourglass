@@ -9,22 +9,22 @@ const CashFlowSummary: React.FC = () => {
   const budgetData = useBudgetStore((state) => state.budgetData);
   // console.log(JSON.stringify(budgetData));
   return (
-    <div className="flex justify-between items-start max-md:flex-col font-light mt-3
+    <div className="flex justify-between items-start max-md:flex-col font-light mt-2
     max-md:items-stretch max-md:gap-0">
       <div className="flex flex-col items-start w-6/12 max-md:w-full max-md:ml-0">
         <div className="flex flex-col max-md:mt-10">
           <div className="text-base font-bold text-white">Current Cash Flow: ${budgetData.currentCashFlow}</div>
-          <div className="mt-2 text-base text-white">
+          <div className="text-base text-white">
             You have ${budgetData.remainingBudget} left to spend this <br/> month to meet your saving goal.
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-stretch w-6/12 ml-5 max-md:w-full max-md:ml-0">
+      <div className="flex flex-col items-stretch w-6/12 ml-2 max-md:w-full max-md:ml-0">
         <div className="flex flex-col items-end max-md:mt-10">
           <div className="self-start text-base font-bold text-right text-lime-300">
             ${budgetData.spent} spent
           </div>
-          <div className="flex justify-start items-center self-stretch mt-3 w-full">
+          <div className="flex justify-start items-center self-stretch mt-2 w-full">
             <div className="flex-1 h-5 rounded-full bg-white bg-opacity-20">
               <div className=" h-full bg-lime-300 rounded-full" 
                         style={{
@@ -33,7 +33,7 @@ const CashFlowSummary: React.FC = () => {
                         />
             </div>
           </div>
-          <div className="self-end mt-1.5 text-base font-bold text-right text-white text-opacity-70">
+          <div className="self-end text-base font-bold text-right text-white text-opacity-70">
             ${budgetData.earned} earned
           </div>
         </div>

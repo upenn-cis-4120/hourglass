@@ -12,8 +12,8 @@ export const CalendarSync: React.FC = () => {
   ]);
 
   return (
-    <section className="flex flex-col gap-4 items-start text-base rounded-none">
-      <h1 className="self-stretch font-bold">Sync to calendar</h1>
+    <section className="flex flex-col gap-2 items-start text-base rounded-none">
+      <h1 className="self-stretch">Sync to calendar</h1>
       {bills.map((bill, index) => (
         <BillItem key={index} {...bill} />
       ))}

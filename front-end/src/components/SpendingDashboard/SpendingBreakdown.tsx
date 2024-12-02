@@ -23,10 +23,10 @@ const spendingData: SpendingData[] = [
 const SpendingBreakdown: React.FC = () => {
   return (
     <>
-      <div className="self-start mt-5 text-base font-bold text-white">
+      <div className="self-start mt-3 text-base font-bold text-white">
         Spending breakdown
       </div>
-      <div className="mt-5 w-full max-md:max-w-full">
+      <div className="w-full max-md:max-w-full">
         {spendingData.map((item, index) => (
           <SpendingCategory key={index} {...item} />
         ))}

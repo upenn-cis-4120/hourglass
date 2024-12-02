@@ -17,7 +17,7 @@ const educationItems: EducationItem[] = [
 
 const LearningTrackerList: React.FC = () => {
   return (
-    <nav className="flex flex-col text-base text-white max-w-[137px] mt-10">
+    <nav className="flex flex-col text-base text-white max-w-[137px] mt-3">
       {educationItems.map((item, index) => (
         <div key={index} className={index > 0 ? "mt-2.5" : ""}>
           <LearningTrackerItem iconSrc={item.iconSrc} title={item.title} />
