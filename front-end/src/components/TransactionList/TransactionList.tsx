@@ -42,7 +42,7 @@ const transactionData: TransactionData[] = [
     categoryColor: '[#60A5FA]'
   },
   {
-    name: 'Cheesecake ...',
+    name: 'Cheesecake Factory',
     category: 'Shopping',
     amount: 50.57,
     emoji: '🛍️',

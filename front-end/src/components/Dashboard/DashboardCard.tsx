@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import CashFlowDashboard from '../CashFlowDashboard/CashFlowDashboard';
-import InvestmentDashboard from '../InvestmentDashboard/InvestmentDashboard';
+// import InvestmentDashboard from '../InvestmentDashboard/InvestmentDashboard';
+import InvestmentDashboard from '../Investments/InvestmentDashboard';
 import SavingsGoal from '../SavingsGoal/SavingsGoal';
 import FinancialChart from '../FinancialChart/FinancialChart';
 import TransactionList from '../TransactionList/TransactionList';

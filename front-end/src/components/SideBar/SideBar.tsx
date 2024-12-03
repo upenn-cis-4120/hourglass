@@ -17,13 +17,13 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="flex flex-col pb-9 shadow-[0px_0px_30px_rgba(0,0,0,0.3)] bg-zinc-800 max-sm:self-stretch 
-    h-screen w-1/5 relative">
+    h-screen w-1/5 relative font-sans">
       <main className="flex flex-col items-start pt-3 pl-2.5 pb-2 w-full h-full max-w-[98%]">
-        <div className="flex flex-row items-center justify-center gap-x-4">
-          <img loading="lazy" src="hourglass_logo.svg" className="h-32 w-32" alt="Hourglass Logo" />
+        <div className="flex flex-row items-center justify-center">
+          <img loading="lazy" src="hourglass_logo.svg" className="h-32 w-26 ml-3" alt="Hourglass Logo" />
           <div className="flex flex-col items-start">
-            <p className="text-sm leading-6 text-white">Welcome to your</p>
-            <h1 className="text-2xl font-bold text-white">Hourglass</h1>
+            <p className="text-xl font-thin leading-6 font-sans text-white">Welcome to your</p>
+            <h1 className="text-3xl font-semibold text-white">Hourglass</h1>
           </div>
         </div>
         <img

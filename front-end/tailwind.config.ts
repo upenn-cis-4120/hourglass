@@ -26,7 +26,7 @@ const config: Config = {
           },
           green: {
             start: '#00653E',
-            end: '#003320',
+            end: '#18BE74',
           },
         },
       },

@@ -39,7 +39,7 @@ export default function RootLayout({
           <SideBar />
           <div className="flex flex-col flex-1">
             {/* Top Bar */}
-            <div className="flex items-center justify-between bg-[#212529]">
+            <div className="flex items-center justify-between">
               {/* Left Section (Text) */}
               <div className="flex items-center bg-[#B0B0B0] px-5 py-3 pr-[15em] rounded-r-full">
                 <p className="text-black text-sm">
@@ -48,7 +48,8 @@ export default function RootLayout({
               </div>
               {/* Right Section (Button) */}
               <button
-                className="px-5 py-3 text-white text-sm rounded-l-full bg-gradient-to-r pr-[20em] from-gradients-orange-start to-gradients-orange-end"
+                className="px-5 py-3 text-white text-sm rounded-l-full bg-gradient-to-r 
+                pr-[20em] from-gradients-orange-start to-gradients-orange-end"
                 onClick={handleAdvisorClick}
               >
                 AI Financial Advisor

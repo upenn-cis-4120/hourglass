@@ -25,7 +25,7 @@ const SpendingCategory: React.FC<SpendingCategoryProps> = ({
 
   return (
     <div className="flex items-center justify-between mt-2.5 whitespace-nowrap max-md:mr-1.5">
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2.5 w-[20%]">
         <div className={`px-2 text-base font-bold text-black rounded-3xl ${borderColor} border-solid bg-stone-900 border-[0.5px] h-[30px] w-[30px] flex items-center justify-center`}>
           {emoji}
         </div>
@@ -33,7 +33,7 @@ const SpendingCategory: React.FC<SpendingCategoryProps> = ({
           {category}
         </div>
       </div>
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2">
         {[...Array(emptyCircles)].map((_, index) => (
           <div key={`empty-${index}`} className="flex shrink-0 w-4 h-4 rounded-full bg-white bg-opacity-10" />
         ))}
