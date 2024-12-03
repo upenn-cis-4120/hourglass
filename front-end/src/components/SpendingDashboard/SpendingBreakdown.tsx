@@ -11,10 +11,9 @@ const SpendingBreakdown: React.FC = () => {
   useEffect(() => {
     const newHighlights = new Set<string>();
 
-    // Detect changes in each spending category
-    Object.entries(budgetData).forEach(([key, value]) => {
-      if (typeof value === "object" && value.left !== undefined && value.budget !== undefined) {
-        if (value.left !== budgetData[key].left || value.budget !== budgetData[key].budget) {
+    (Object.entries(budgetData) as [keyof typeof budgetData, any][]).forEach(([key, value]) => {
+      if (typeof value === "object" && "left" in value && "budget" in value) {
+        if (value.left !== value.left || value.budget !== value.budget) {
           newHighlights.add(key);
         }
       }
