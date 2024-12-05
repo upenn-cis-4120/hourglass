@@ -23,16 +23,16 @@ const Menu: React.FC<{ handleAdvisorClick: any }> = ({ handleAdvisorClick }) => 
   return (
     <nav className="flex flex-col items-start px-2.5 w-full h-full text-base text-white position: relative">
       {navItems.map((item, index) => (
+        <Link className="w-full" href={item.link} key={index}>
         <div
           key = {index}
           onClick={() => setActiveItem(index)}
           className={`flex items-center w-full px-4 rounded-md cursor-pointer ${activeItem === index ? 'bg-gradient-to-r from-gradients-green-start to-gradients-green-end' : ''
             }`}
         >
-          <Link href={item.link} key={index}>
-            <NavItem icon={item.icon} label={item.label} />
-          </Link>
+            <NavItem icon={item.icon} label={item.label} />   
         </div>
+        </Link>
       ))}
       <div className="shrink-0 self-stretch mt-2.5 h-px border border-solid border-white border-opacity-10" />
       <div className='h-full' style={{ transform: "scale(0.9)", transformOrigin: "top left" }}>
