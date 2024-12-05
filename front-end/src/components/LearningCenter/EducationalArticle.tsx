@@ -13,7 +13,7 @@ const EducationalArticle: React.FC<EducationalArticleProps> = ({ title, descript
     <article className="flex flex-col w-[33%] max-md:ml-0 max-md:w-full">
       <div className="flex flex-col grow items-start text-base font-bold text-white max-md:mt-10">
         <h3 data-layername={title.toLowerCase().replace(' ', '')}>{title}</h3>
-        <p data-layername={description.toLowerCase().replace(/[^a-z0-9]/g, '')} className="self-stretch mt-3.5">
+        <p data-layername={description.toLowerCase().replace(/[^a-z0-9]/g, '')} className="self-stretch font-thin mt-3.5">
           {description}
         </p>
         <button data-layername="read" className="btn">

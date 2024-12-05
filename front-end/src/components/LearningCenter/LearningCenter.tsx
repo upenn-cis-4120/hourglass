@@ -1,5 +1,6 @@
-// LearningCenter.tsx
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import VideoLesson from './VideoLesson';
 import EducationalArticle from './EducationalArticle';
 
@@ -7,7 +8,7 @@ interface VideoLessonData {
   imageSrc: string;
   title: string;
   description: string;
-  videoLink?: string; // Optional YouTube link
+  videoLink?: string;
 }
 
 interface ArticleData {
@@ -34,7 +35,6 @@ const videoLessons: VideoLessonData[] = [
     description: "Master the art of building financial security!",
     videoLink: "https://www.youtube.com/embed/ku52Pb7fFT8?si=wl_wHVj15IQV3Dgt"
   },
-  // Add more lessons as needed
 ];
 
 const articles: ArticleData[] = [
@@ -53,25 +53,36 @@ const articles: ArticleData[] = [
 ];
 
 const LearningCenter: React.FC = () => {
+  const [selectedVideo, setSelectedVideo] = useState<VideoLessonData | null>(null);
+
+  const handleVideoClick = (video: VideoLessonData) => {
+    setSelectedVideo(video);
+  };
+
+  const closePanel = () => {
+    setSelectedVideo(null);
+  };
+
   return (
-    <main data-layername="desktop11" className="flex flex-col px-16 py-16 bg-neutral-800 max-md:px-5">
-      <h1 data-layername="learningCenter" className="self-start text-3xl font-bold text-white">
-        Learning Center
-      </h1>
-      <h2 data-layername="videoLessons" className="self-start mt-10 text-xl font-bold text-white">
-        Video Lessons
-      </h2>
+    <main className="flex flex-col px-16 py-16 bg-neutral-800 max-md:px-5">
+      <h1 className="self-start text-3xl font-bold text-white">Learning Center</h1>
+      <h2 className="self-start mt-10 text-xl font-bold text-white">Video Lessons</h2>
       <section className="self-end mt-9 w-full max-w-[1067px] max-md:max-w-full">
         <div className="flex gap-5 max-md:flex-col flex-wrap">
           {videoLessons.map((lesson, index) => (
-            <VideoLesson key={index} {...lesson} />
+            <div key={index} className="relative group">
+              <VideoLesson {...lesson} />
+              {/* Clickable overlay */}
+              <div
+                onClick={() => handleVideoClick(lesson)}
+                className="absolute inset-0 cursor-pointer bg-transparent group-hover:bg-black group-hover:bg-opacity-10"
+              ></div>
+            </div>
           ))}
         </div>
       </section>
-      <hr className="shrink-0 self-end mt-11 max-w-full h-px border border-solid border-white border-opacity-10 w-[1067px] max-md:mt-10" />
-      <h2 data-layername="educationalArticles" className="self-start mt-8 text-xl font-bold text-white">
-        Educational Articles
-      </h2>
+      <hr className="self-end mt-11 max-w-full h-px border border-solid border-white border-opacity-10 w-[1067px] max-md:mt-10" />
+      <h2 className="self-start mt-8 text-xl font-bold text-white">Educational Articles</h2>
       <section className="self-end mt-8 w-full max-w-[1059px] max-md:mr-2.5 max-md:max-w-full">
         <div className="flex gap-5 max-md:flex-col">
           {articles.map((article, index) => (
@@ -79,6 +90,30 @@ const LearningCenter: React.FC = () => {
           ))}
         </div>
       </section>
+      {selectedVideo && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-[#212529] p-7 rounded-lg shadow-lg max-w-3xl w-full">
+          <button className="text-white font-bold float-right mb-5 ml-5" onClick={closePanel}>
+          <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/0615e85ede486eec0d6790357dc27201b9481754705d0d688d75e3564cb8fdf2?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e"
+              alt=""
+              className="object-contain self-end w-3.5 aspect-square"
+            />
+          </button>
+          <iframe
+            className="w-full h-96"
+            src={selectedVideo.videoLink}
+            title={selectedVideo.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+          <h3 className="text-xl font-bold mt-4 text-white">{selectedVideo.title}</h3>
+          <p className="text-sm font-thin mt-2 text-white">{selectedVideo.description}</p>
+        </div>
+      </div>      
+      )}
     </main>
   );
 };
