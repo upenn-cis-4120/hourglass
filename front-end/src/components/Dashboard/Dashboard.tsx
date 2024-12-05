@@ -10,17 +10,18 @@ export const Dashboard: React.FC = () => {
   const [rows, setRows] = useState([
     { id: "row1", cards: [{ title: "This Month's Budgeting", width: "w-[53%]" }, { title: "Investments", width: "w-[42%]" }] },
     { id: "row2", cards: [{ title: "Savings Track & Forecast", width: "w-[97%]" }] },
-    { id: "row3", cards: [{ title: "Recurring Payments", width: "w-[33%]" }, { title: "Transactions", width: "w-[30%]" }, { title: "Accounts", width: "w-[30%]" }] },
-    { id: "row4", cards: [{ title: "Projections", width: "w-[33%]" }, { title: "Upcoming Bills", width: "w-[30%]" }, { title: "What You Have Learned So Far", width: "w-[30%]" }] },
+    { id: "row3", cards: [{ title: "Recurring Payments", width: "w-[30%]" }, { title: "Transactions", width: "w-[30%]" }, { title: "Accounts", width: "w-[30%]" }] },
+    { id: "row4", cards: [{ title: "Projections", width: "w-[30%]" }, { title: "Upcoming Bills", width: "w-[30%]" }, { title: "What You Have Learned So Far", width: "w-[30%]" }] },
   ]);
 
   const [hydrated, setHydrated] = useState(false);
+  const [isDndEnabled, setIsDndEnabled] = useState(false);
 
   useEffect(() => {
-    setHydrated(true); // Ensure the component only renders drag-and-drop logic on the client
+    setHydrated(true);
   }, []);
 
-  if (!hydrated) return null; // Prevent rendering until hydration
+  if (!hydrated) return null;
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
@@ -35,27 +36,68 @@ export const Dashboard: React.FC = () => {
     }
   };
 
+  const toggleDnd = () => {
+    setIsDndEnabled((prev) => !prev);
+  };
+
   return (
-    <main data-layername="desktop11" className="flex flex-col px-16 py-5 bg-[#212529] max-md:px-5">
-      {/* <div style={{ transform: "scale(0.9)", transformOrigin: "top" }}> */}
-      <header className="z-8 self-start mt-0 text-3xl font-bold text-white">
-        Dashboard
+    <main className="flex flex-col px-16 py-5 bg-[#212529] max-md:px-5">
+      <header className="flex flex-row items-center justify-between z-8 mt-0 text-3xl font-bold text-white">
+        <span>Dashboard</span>
+        <div
+          onClick={toggleDnd}
+          className="flex flex-row mx-2 my-2 text-sm font-medium text-[#FF8A3D] rounded hover:pointer cursor-pointer"
+        >
+          <p className="mx-2 underline underline-offset-2">{isDndEnabled ? "Save Re-order" : "Re-order"}</p>
+          <img src='reorder.svg'></img>
+        </div>
       </header>
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={rows.map((row) => row.id)}>
+      {isDndEnabled ? (
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={rows.map((row) => row.id)}>
+            <div className="flex flex-col gap-3 font-extralight">
+              {rows.map((row) => (
+                <SortableRow
+                  key={row.id}
+                  id={row.id}
+                  cards={row.cards}
+                  isDndEnabled={isDndEnabled}
+                  onReorder={(updatedCards) =>
+                    setRows((prevRows) =>
+                      prevRows.map((r) => (r.id === row.id ? { ...r, cards: updatedCards } : r))
+                    )
+                  }
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
+      ) : (
         <div className="flex flex-col gap-3 font-extralight">
           {rows.map((row) => (
-            <SortableRow key={row.id} id={row.id} cards={row.cards} />
+            <DashboardRow
+              key={row.id}
+              cards={row.cards}
+              isDndEnabled={isDndEnabled}
+              onReorder={(updatedCards) =>
+                setRows((prevRows) =>
+                  prevRows.map((r) => (r.id === row.id ? { ...r, cards: updatedCards } : r))
+                )
+              }
+            />
           ))}
         </div>
-      </SortableContext>
-    </DndContext>
-    {/* </div> */}
+      )}
     </main>
   );
 };
 
-const SortableRow: React.FC<{ id: string; cards: Array<{ title: string; width: string }> }> = ({ id, cards }) => {
+const SortableRow: React.FC<{
+  id: string;
+  cards: Array<{ title: string; width: string }>;
+  isDndEnabled: boolean;
+  onReorder: (updatedCards: Array<{ title: string; width: string }>) => void; // Forwarded prop
+}> = ({ id, cards, isDndEnabled, onReorder }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
   const style = {
@@ -68,11 +110,10 @@ const SortableRow: React.FC<{ id: string; cards: Array<{ title: string; width: s
     <div
       ref={setNodeRef} // Attach the drag-and-drop ref
       style={style} // Apply dynamic drag styles
-      {...attributes} // Drag-and-drop ARIA attributes
-      {...listeners} // Drag-and-drop event listeners
-      className="rounded cursor-mov"
+      {...(isDndEnabled ? { ...attributes, ...listeners } : {})} // Only apply drag-and-drop if enabled
+      className="rounded cursor-move"
     >
-      <DashboardRow cards={cards} />
+      <DashboardRow cards={cards} isDndEnabled={isDndEnabled} onReorder={onReorder} />
     </div>
   );
 };

@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 :root {
   --background: #ffffff;
@@ -61,4 +61,31 @@ body {
 .fade-highlight {
   animation: fadeHighlight 3s ease-out;
   border-radius: 8px; /* Makes the edges of the element rounded */
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+.wiggle {
+  animation: wiggle 0.s ease-in-out infinite;
+}
+
+@keyframes halo {
+  0%, 100% {
+    box-shadow: 0 0 0 #18BE74, 0 0 5px #00653E;
+  }
+  50% {
+    box-shadow: 0 0 5px #00925a, 0 0 8px #212a26;
+  }
+}
+
+.halo-effect {
+  animation: halo 3s infinite ease-in-out;
+  border-radius: 1rem;
 }
