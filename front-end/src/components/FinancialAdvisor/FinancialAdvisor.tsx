@@ -25,8 +25,8 @@ const FinancialAdvisor: React.FC<{ visible: boolean, handleCloseAdvisor: any }> 
   return (
 <div
   className={`absolute top-0 right-0 h-screen w-[28%] bg-zinc-800 shadow-lg 
-    transform duration-300 ease-in-out
-    ${visible ? '-translate-x-0 opacity-100 z-10' : 'translate-x-full opacity-0 pointer-events-none z-10'
+    transform duration-300 ease-in-out z-50
+    ${visible ? '-translate-x-0 opacity-100 z-50' : 'translate-x-full opacity-0 pointer-events-none z-50'
     }`}
 >
       <main className="flex flex-col mx-auto w-full h-full rounded-none max-w-[480px] ">

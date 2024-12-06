@@ -27,9 +27,10 @@ const VideoLesson: React.FC<VideoLessonProps> = ({ imageSrc, title, description,
   };
 
   return (
-    <article className="flex flex-col w-full max-md:ml-0 max-md:w-full mb-2">
-      <div className="flex flex-col grow text-base font-bold text-white max-md:mt-10">
-        <div className="flex relative flex-col justify-center items-center px-16 py-20 w-full text-center whitespace-nowrap aspect-[1.64] max-md:px-5">
+    <article className="flex flex-col w-full max-md:ml-0 max-md:w-full mb-2 rounded-lg">
+      <div className="flex flex-col grow text-base font-bold text-white max-md:mt-10 ">
+        <div className="relative flex justify-center 
+        border-[0.8px] border-white border-opacity-75 items-center w-full aspect-[1.64] rounded-2xl overflow-hidden">
           {isVideoPlaying && videoLink ? (
             <iframe
               width="full"
@@ -41,20 +42,16 @@ const VideoLesson: React.FC<VideoLessonProps> = ({ imageSrc, title, description,
               allowFullScreen
             ></iframe>
           ) : (
-            <img
-              loading="lazy"
-              src={thumbnail}
-              alt={title}
-              className="object-cover absolute inset-0 size-full"
-            />
-          )}
-          {!isVideoPlaying && (
-            <button
-              className="flex relative gap-1.5 items-start px-2.5 pt-2.5 pb-4 rounded-xl w-[85px] btn"
-              onClick={handleWatchClick}
-            >
-              <span data-layername="watch">Watch</span>
-            </button>
+            <>
+              <img
+                loading="lazy"
+                src={thumbnail}
+                alt={title}
+                className="absolute inset-0 object-cover w-full h-full"
+              />
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-[#212529] bg-opacity-75"></div>
+            </>
           )}
         </div>
         <h3 data-layername={title.toLowerCase().replace(" ", "")} className="self-start mt-2.5">
@@ -62,7 +59,7 @@ const VideoLesson: React.FC<VideoLessonProps> = ({ imageSrc, title, description,
         </h3>
         <p
           data-layername={description.toLowerCase().replace(/[^a-z0-9]/g, "")}
-          className="mt-3.5 text-sm font-thin leading-5 max-md:mr-1"
+          className="mt-2 font-sans text-sm font-thin leading-5 max-md:mr-1"
         >
           {description}
         </p>

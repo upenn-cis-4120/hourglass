@@ -16,7 +16,7 @@ const SideBar: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col pb-9 shadow-[0px_0px_30px_rgba(0,0,0,0.3)] bg-zinc-800 max-sm:self-stretch 
+    <div className="flex flex-col pb-9 shadow-[0px_0px_30px_rgba(0,0,0,0.3)] bg-[#272B2F] max-sm:self-stretch 
     h-screen w-1/5 relative font-sans">
       <main className="flex flex-col items-start pt-3 pl-2.5 pb-2 w-full h-full max-w-[98%]">
         <div className="flex flex-row items-center justify-center">

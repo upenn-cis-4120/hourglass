@@ -15,6 +15,7 @@ const navItems = [
   { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/efbdc659f6e81d270707c476f97c749ed5fec8415fd39ea648a07333a9e77bbb?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Investing", link: "/" },
   { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/976b06a91d2b0cf88f8180ba99d96468022ce32a11c992a0b3723850f9d5e26c?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Progress Tracker", link: "/" },
   { icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/b49e055f63ebff4abea669a6b03818ad64d740bc5b46907fceca64e0e700b532?placeholderIfAbsent=true&apiKey=271c6a8a64c7449c91e4662f85acfb4e", label: "Learning Center", link: "/learning" },
+  // { icon: "hourglass_logo_about.svg", label: "About Us", link: "/aboutus" },
 ];
 
 const Menu: React.FC<{ handleAdvisorClick: any }> = ({ handleAdvisorClick }) => {
@@ -40,9 +41,17 @@ const Menu: React.FC<{ handleAdvisorClick: any }> = ({ handleAdvisorClick }) => 
         <DebtSection />
         </div>
       <div className="shrink-0 self-stretch mt-2.5 h-px border border-solid border-white border-opacity-10" />
-      <div className="flex gap-5 justify-between self-stretch mx-2.5 mt-2.5 text-sm">
+      <div className="flex gap-1 justify-between self-stretch 
+      mt-2.5 px-5 text-sm font-thin underline ">
         <div data-layername="settings">Settings</div>
+        <div className='border-[0.2px] opacity-70'></div>
         <div data-layername="signOut" className="text-right">Sign Out</div>
+        <div className='border-[0.2px] opacity-70'></div>
+        <div data-layername="help">Help</div>
+        <div className='border-[0.2px] opacity-70'></div>
+        <Link href='/aboutus'>
+        <div data-layername="about">About</div>
+        </Link>
       </div>
     </nav>
   );

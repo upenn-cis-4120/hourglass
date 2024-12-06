@@ -64,7 +64,7 @@ export default function RootLayout({
               </div>
               {isChatBoxVisible && (
                 <div
-                  className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out z-10"
+                  className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out z-50"
                   onClick={handleAdvisorClick}
                 ></div>
               )}

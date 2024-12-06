@@ -41,7 +41,7 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <main className="flex flex-col px-16 py-5 bg-[#212529] max-md:px-5">
+    <main className="flex flex-col px-16 py-5 bg-[#212529] max-md:px-5 font-sans">
       <header className="flex flex-row items-center justify-between z-8 mt-0 text-3xl font-bold text-white">
         <span>Dashboard</span>
         <div

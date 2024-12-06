@@ -28,8 +28,8 @@ body {
   justify-content: center; /* justify-center */
   padding-left: 1.25rem; /* px-5 */
   padding-right: 1.25rem; /* px-5 */
-  padding-top: 1.25rem; /* pt-5 */
-  padding-bottom: 1.25rem; /* pb-5 */
+  padding-top: 0.5rem; /* pt-5 */
+  padding-bottom: 0.5rem; /* pb-5 */
   margin-top: 0.875rem; /* mt-3.5 */
   font-weight: bold; /* font-bold */
   color: white; /* text-white */
@@ -78,14 +78,14 @@ body {
 
 @keyframes halo {
   0%, 100% {
-    box-shadow: 0 0 0 #18BE74, 0 0 5px #00653E;
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0.3), 0 0 1px #FF8A3D;
   }
   50% {
-    box-shadow: 0 0 5px #00925a, 0 0 8px #212a26;
+    box-shadow: 0 0 5px #FF8A3D, 0 0 8px #212a26;
   }
 }
 
 .halo-effect {
-  animation: halo 3s infinite ease-in-out;
+  animation: halo 2s infinite ease-in-out;
   border-radius: 1rem;
 }

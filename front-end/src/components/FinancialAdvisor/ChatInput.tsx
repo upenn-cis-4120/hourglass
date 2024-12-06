@@ -204,13 +204,13 @@ const chatSession = model.startChat({
     {
       role: "user",
       parts: [
-        {text: "Could you suggest me a plan to save $200 more this month? budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n}\nFor prompts like this, suggest a reasonable amount to save per month to the user, give an explanation for the suggestion, and ask if the user would like to adjust their budget plan according to your suggestion, in the format {\"response\":\"for this goal I would suggest...\"}\n\nIn this case, no need to respond with the updated budget plan. Instead, respond with the update plan after the user agrees to change their plan based on your suggestion.\n\nNote that you should not send along the \"updated\" field in the response json when making a suggestion, instead, only add the \"updated\" field with updated plan after the user accepts your suggestion. Otherwise, if not making a suggestion, you can include the \"updated\" field as usual then."},
+        {text: "Could you suggest me a plan to save $200 more this month? budgetData: {\ncurrentCashFlow: 5000,\nremainingBudget: 1000,\nspent: 1000,\nearned: 3000,\nshopping: {\nleft: 100,\nbudget: 200,\n},\ntravel: {\nleft: 300,\nbudget: 300,\n},\neatingout: {\nleft: 150,\nbudget: 200,\n},\ngroceries: {\nleft: 150,\nbudget: 300,\n}\n}\nFor prompts like this, suggest a reasonable amount to save per month to the user, give an explanation for the suggestion, and ask if the user would like to adjust their budget plan according to your suggestion, in the format {\"response\":\"for this goal I would suggest...\"}\n\nIn this case, no need to respond with the updated budget plan. Instead, respond with the update plan after the user agrees to change their plan based on your suggestion.\n\nNote that you must not send along the \"updated\" field in the response json when making a suggestion (i.e. ending your response with a ?), instead, only add the \"updated\" field with updated plan after the user accepts your suggestion. Otherwise, if not making a suggestion (e.g. your response doesn't end with ?), you can include the \"updated\" field as usual then."},
       ],
     },
     {
       role: "model",
       parts: [
-        {text: "```json\n{\n  \"response\": \"To save an extra $200 this month, we could reduce spending across several categories. However, drastically cutting back might leave you with little flexibility. I suggest aiming to save $150 this month by reducing each of your non-grocery categories by $37.50. This is more manageable and maintains some spending flexibility. Would you like me to help you adjust your budget plan accordingly? If you'd prefer a more gradual approach, we can discuss strategies for increasing your savings over several months.\"\n}\n```\n"},
+        {text: "```json\n{\n  \"response\": \"To save an extra $200 this month, we need to make adjustments to your current spending.  I suggest reducing each category by $50. This will ensure that you still have some flexibility in each area while achieving your savings goal.  This would leave you with:\\n\\n* Shopping: $50 left, $150 budget\\n* Travel: $250 left, $250 budget\\n* Eating Out: $100 left, $150 budget\\n* Groceries: $100 left, $250 budget\\n\\nWould you like to proceed with this plan and integrate it into your current budget?\"\n}\n```\n"},
       ],
     },
   ],
@@ -262,9 +262,14 @@ const ChatInput: React.FC<ChatInputProps> = ({onSendMessage, onDashboardChange})
       }
 
       if(responseJSON?.updated){
-        console.log("updating data: "+JSON.stringify(responseJSON.updated));
-        updateBudgetData(responseJSON.updated);
-        onDashboardChange(true);
+        const updatedData = JSON.stringify(responseJSON.updated);
+        console.log("updated data: "+updatedData);
+        if (updatedData===JSON.stringify(budgetData)){
+          console.log("data unchanged: "+updatedData+ "\n"+JSON.stringify(budgetData));
+        } else {
+          updateBudgetData(responseJSON.updated);
+          onDashboardChange(true);
+        }
       }
 
     } catch (error) {
